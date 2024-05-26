@@ -2,6 +2,7 @@ body{
     background-image: url("PokerTable.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
 }
 
 #DealerHand{
