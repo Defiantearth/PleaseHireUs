@@ -39,7 +39,8 @@ const deckUnshuffled = [
 ];
 
 //shuffle deck
-const deckShuffled = shuffleDeck(deckUnshuffled);
+const deckShuffled = deckUnshuffled
+shuffleDeck(deckShuffled);
 
 console.log(deckShuffled[0].suite);
 
