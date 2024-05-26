@@ -1,7 +1,7 @@
 //return link for a specific card
 function getCardImageLink(suite, value){
 
-    return ("PlayingCards/" + suite + value + ".png");
+    return ("PlayingCards/" + value + suite + ".png");
     }
 
 //shuffle the deck of cards
