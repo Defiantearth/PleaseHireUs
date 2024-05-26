@@ -43,7 +43,7 @@ const deckShuffled = shuffleDeck(deckUnshuffled);
 
 const playerFirstCard = deckShuffled[0];
 
-const DealerFirstCard = deckShuffled[1];
+const dealerFirstCard = deckShuffled[1];
 
 const playerSecondCard = deckShuffled[2];
 
