@@ -20,6 +20,17 @@ function shuffleDeck(deck){
     }
 }
 
+//adds card for the player
+function playerHitCard(deck){
+    const newCard = deck.pop();
+
+    var img = document.createElement("img");
+    img.src =  getCardImageLink(newCard.suite, newCard.value);
+    var li = document.getElementById("playerCardList");
+    li.appendChild(img);
+
+}
+
 
     //a list of objects. the list is the deck and each object is a card.
 const deckUnshuffled = [
@@ -56,5 +67,6 @@ document.getElementById("playerFirstCard").src = getCardImageLink(playerFirstCar
 document.getElementById("dealerFirstCard").src = getCardImageLink(dealerFirstCard.suite, dealerFirstCard.value);
 document.getElementById("playerSecondCard").src = getCardImageLink(playerSecondCard.suite, playerSecondCard.value);
 
-//const secondCard = document.getElementById("playerSecondCard");
-//secondCard.src = "PlayingCards/As.png";
+var hitButton = document.getElementById("hitButton");
+
+hitButton.addEventListener("click",playerHitCard(deckShuffled));
