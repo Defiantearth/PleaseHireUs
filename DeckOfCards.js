@@ -26,8 +26,8 @@ function playerHitCard(deck){
 
     var img = document.createElement("img");
     img.src =  getCardImageLink(newCard.suite, newCard.value);
-    var li = document.getElementById("playerCardList");
-    li.appendChild(img);
+    var ul = document.getElementById("playerCardList");
+    ul.append(img);
 
 }
 
