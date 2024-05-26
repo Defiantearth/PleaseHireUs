@@ -50,6 +50,8 @@ const dealerFirstCard = deckShuffled[1];
 
 const playerSecondCard = deckShuffled[2];
 
+console.log(getCardImageLink(playerFirstCard.suite, playerFirstCard.value))
+
 document.getElementById("playerFirstCard").src = getCardImageLink(playerFirstCard.suite, playerFirstCard.value);
 
 
