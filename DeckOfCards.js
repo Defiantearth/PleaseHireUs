@@ -45,9 +45,9 @@ shuffleDeck(deckShuffled);
 console.log(deckShuffled[0].suite);
 
 //get starting cards
-const playerFirstCard = deckShuffled[0];
-const dealerFirstCard = deckShuffled[1];
-const playerSecondCard = deckShuffled[2];
+const playerFirstCard = deckShuffled.pop();
+const dealerFirstCard = deckShuffled.pop();
+const playerSecondCard = deckShuffled.pop();
 
 console.log(getCardImageLink(playerFirstCard.suite, playerFirstCard.value))
 
