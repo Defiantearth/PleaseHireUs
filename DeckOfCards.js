@@ -41,11 +41,11 @@ const deckUnshuffled = [
 //shuffle deck
 const deckShuffled = shuffleDeck(deckUnshuffled);
 
-var playerFirstCard = deckShuffled[1];
+const playerFirstCard = deckShuffled[0];
 
-var DealerFirstCard = deckShuffled[1];
+const DealerFirstCard = deckShuffled[1];
 
-var playerSecondCard = deckShuffled[2];
+const playerSecondCard = deckShuffled[2];
 
 document.getElementById("playerFirstCard").src = getCardImageLink(playerFirstCard.suite, playerFirstCard.value);
 
