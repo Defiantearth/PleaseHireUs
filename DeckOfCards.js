@@ -41,6 +41,8 @@ const deckUnshuffled = [
 //shuffle deck
 const deckShuffled = shuffleDeck(deckUnshuffled);
 
+console.log(deckShuffled[0].suite);
+
 const playerFirstCard = deckShuffled[0];
 
 const dealerFirstCard = deckShuffled[1];
