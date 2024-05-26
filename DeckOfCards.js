@@ -44,16 +44,17 @@ shuffleDeck(deckShuffled);
 
 console.log(deckShuffled[0].suite);
 
+//get starting cards
 const playerFirstCard = deckShuffled[0];
-
 const dealerFirstCard = deckShuffled[1];
-
 const playerSecondCard = deckShuffled[2];
 
 console.log(getCardImageLink(playerFirstCard.suite, playerFirstCard.value))
 
+//show starting cards
 document.getElementById("playerFirstCard").src = getCardImageLink(playerFirstCard.suite, playerFirstCard.value);
+document.getElementById("dealerFirstCard").src = getCardImageLink(dealerFirstCard.suite, dealerFirstCard.value);
+document.getElementById("playerSecondCard").src = getCardImageLink(playerSecondCard.suite, playerSecondCard.value);
 
-
-const secondCard = document.getElementById("playerSecondCard");
-secondCard.src = "PlayingCards/As.png";
+//const secondCard = document.getElementById("playerSecondCard");
+//secondCard.src = "PlayingCards/As.png";
