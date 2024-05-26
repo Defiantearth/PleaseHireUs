@@ -5,16 +5,40 @@ body{
     background-size: 100%;
 }
 
+#startingHeader{
+    position: absolute;
+    left: 42%;
+    font-size: 50px;
+}
+
+#startGameButton{
+    position: absolute;
+    left: 48%;
+    bottom: 50%;
+    border-radius: 50%;
+    border:none;
+    padding: 40px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+
+
+}
+
 #DealerHand{
     position: absolute;
     left: 45%;
     top: 5%;
+    visibility:hidden;
 }
 
 #PlayerHand{
     position: absolute;
     left: 45%;
     bottom: 10%;
+    visibility: hidden;
 }
 
 #DealerHand{

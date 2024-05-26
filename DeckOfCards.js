@@ -1,3 +1,15 @@
+
+function startGame(){
+    //get the design to look right
+    document.getElementById("startGameButton").remove();
+    document.getElementById("startingHeader").remove();
+    document.getElementById("DealerHand").style.visibility = "visible";
+    document.getElementById("PlayerHand").style.visibility = "visible";
+
+    var playerTotal = 0;
+    var dealerTotal = 0;
+}
+
 //return link for a specific card
 function getCardImageLink(suite, value){
 
@@ -28,6 +40,8 @@ function playerHitCard(){
     img.src =  getCardImageLink(newCard.suite, newCard.value);
     var ul = document.getElementById("playerCardList");
     ul.append(img);
+
+    //case where player busts
 
 }
 
@@ -70,3 +84,7 @@ document.getElementById("playerSecondCard").src = getCardImageLink(playerSecondC
 //look for hit button to be clicked
 const hitButton = document.getElementById("hitButton");
 hitButton.addEventListener("click",playerHitCard);
+
+//look for start game button to be pressed
+const startButton = document.getElementById("startGameButton");
+startButton.addEventListener("click",startGame);
