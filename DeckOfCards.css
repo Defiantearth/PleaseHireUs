@@ -1,0 +1,25 @@
+body{
+    background-image: url("PokerTable.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#DealerHand{
+    position: fixed;
+    left: 850px;
+    top: 50px;
+}
+
+#PlayerHand{
+    position: fixed;
+    top: 650px;
+    left: 850px;
+}
+
+#DealerHand{
+    color:white;
+}
+
+#PlayerHand{
+    color:white;
+}
