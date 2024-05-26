@@ -4,8 +4,25 @@ function getCardImageLink(suite, value){
     return ("PlayingCards/" + suite + value + ".png");
     }
 
+//shuffle the deck of cards
+function shuffleDeck(deck){
+    let currentIndex = deck.length;
+
+    //while there are elements to shuffle still
+    while(currentIndex != 0){
+         
+        //pick a remaning element
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        //swap it with the current element
+        [deck[currentIndex], deck[randomIndex]] = [deck[randomIndex], deck[currentIndex]];
+    }
+}
+
+
     //a list of objects. the list is the deck and each object is a card.
-const deck = [
+const deckUnshuffled = [
     {suite: "s", value: "A"},
     {suite: "s", value: "2"},
     {suite: "s", value: "3"},
@@ -21,18 +38,17 @@ const deck = [
     {suite: "s", value: "K"},
 ];
 
-//var cardIndex = 
-var card = {};
-card.suite = deck[1].suite;
-card.value = deck[1].value;
+//shuffle deck
+const deckShuffled = shuffleDeck(deckUnshuffled);
 
+var playerFirstCard = deckShuffled[0];
 
+var DealerFirstCard = deckShuffled[1];
 
+var playerSecondCard = deckShuffled[2];
 
+document.getElementById("playerFirstCard").src = getCardImageLink(playerFirstCard.suite, playerFirstCard.value);
 
-
-const firstCard = document.getElementById("playerFirstCard");
-firstCard.src = "PlayingCards/2s.png";
 
 const secondCard = document.getElementById("playerSecondCard");
 secondCard.src = "PlayingCards/As.png";
