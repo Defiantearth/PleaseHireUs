@@ -21,8 +21,8 @@ function shuffleDeck(deck){
 }
 
 //adds card for the player
-function playerHitCard(deck){
-    const newCard = deck.pop();
+function playerHitCard(){
+    const newCard = deckShuffled.pop();
 
     var img = document.createElement("img");
     img.src =  getCardImageLink(newCard.suite, newCard.value);
@@ -67,6 +67,6 @@ document.getElementById("playerFirstCard").src = getCardImageLink(playerFirstCar
 document.getElementById("dealerFirstCard").src = getCardImageLink(dealerFirstCard.suite, dealerFirstCard.value);
 document.getElementById("playerSecondCard").src = getCardImageLink(playerSecondCard.suite, playerSecondCard.value);
 
-var hitButton = document.getElementById("hitButton");
-
-hitButton.addEventListener("click",playerHitCard(deckShuffled));
+//look for hit button to be clicked
+const hitButton = document.getElementById("hitButton");
+hitButton.addEventListener("click",playerHitCard);

@@ -1,20 +1,20 @@
 body{
     background-image: url("PokerTable.jpg");
-    background-repeat: repeat-y;
+    background-repeat:repeat-y;
     background-size: cover;
-    height: 100%;
+    background-size: 100%;
 }
 
 #DealerHand{
-    position: fixed;
-    left: 850px;
-    top: 50px;
+    position: absolute;
+    left: 45%;
+    top: 5%;
 }
 
 #PlayerHand{
-    position: fixed;
-    top: 650px;
-    left: 850px;
+    position: absolute;
+    left: 45%;
+    bottom: 10%;
 }
 
 #DealerHand{
@@ -26,6 +26,11 @@ body{
 }
 
 li{
-    display: inline-block;
-    margin-right: 10px;
+    display: inline;
+    display:flexbox;
+}
+
+ul{
+    list-style-type: none;
+    padding-left:0;
 }
