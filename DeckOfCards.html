@@ -11,9 +11,10 @@
    
     <h1 id="startingHeader">BLACKJACK!!!</h1>
     <button id="startGameButton">Start Game</button>
+    
 
     <div id="DealerHand">
-        <p id="DealerHandText">Dealer</p>
+        <p id="dealerHandText">Dealer</p>
 
         <ul id="dealerCardList">
             <li><img src="PlayingCards/cardBackGreen.png" id="dealerFirstCard"></li>
@@ -21,19 +22,50 @@
         </ul>
         </div>
     
-    <div id="PlayerHand">
-        <p id="playerHandText">Player</p>
         
-        <ul id="playerCardList">
-            <li><img src="PlayingCards/cardBackGreen.png" id="playerFirstCard"></li>
-            <li><img src="PlayingCards/cardBackGreen.png" id="playerSecondCard"></li>
-        </ul>
         
+        <p id="blackJackParagraph">BlackJack</p>
+
+       
+        <div id="allHands">
+        <div id="PlayerHand">
+          <p id="playerHandText">Player</p>
+        
+
+          <ul id="playerCardList">
+             <li><img src="PlayingCards/cardBackGreen.png" id="playerFirstCard"></li>
+             <li><img src="PlayingCards/cardBackGreen.png" id="playerSecondCard"></li>
+          </ul>
+
+          
+        <div id="buttons">
         <button id="hitButton">Hit</button>
-        <button>Stay</button>
-        <button>Double</button>
-        <button>Split</button>
-    </div>
+        <button id="stayButton">Stay</button>
+        <button id="doubleButton">Double</button>
+        <button id="splitButton">Split</button>
+        </div>
+        <p id="betText">0</p>
+        
+        </div>
+        </div>     
+       
+        <ul id="chipList">
+              <li><p id="startingChipAmount">$100</p></li>
+              <li><img src="PokerChips/BlueChip.png" id="blueChip" ></li>
+              <li><img src="PokerChips/RedChip.png" id="redChip" ></li>
+              <li><img src="PokerChips/GreenChip.png" id="greenChip" ></li>
+              <li><img src="PokerChips/BlackChip.png" id="blackChip" ></li>
+              <li><img src="PokerChips/PurpleChip.png" id="purpleChip" ></li>
+              <li><img src="PokerChips/YellowChip.png" id="yellowChip" ></li>
+              <li><img src="PokerChips/PinkChip.png" id="pinkChip" ></li>
+              <li><button id="PlaceBetButton">Place Bet</button></li>
+            </ul> 
+    
+            <div id="roundEnd">
+            <p id="endGameText">YOU WON OR LOST!</p>
+            <button id="newHandButton">New Hand</button>
+            </div>
+   
 </body>
 
 <script type="text/javascript" src="DeckOfCards.js"></script>

@@ -23,8 +23,15 @@ body{
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
+}
 
-
+#blackJackParagraph{
+    position:absolute; 
+    top: 35%;
+    left: 40%;
+    font-size: 70px;
+    color: white;
+    visibility: hidden;
 }
 
 #DealerHand{
@@ -34,27 +41,112 @@ body{
     visibility:hidden;
 }
 
+#dealerFirstCard{
+    position: relative;
+}
+
+#dealerSecondCard{
+    position:relative;
+    right:100px;
+    top:20px;
+}
+
 #PlayerHand{
+    position: relative;
+    top: 70px;
+}
+#allHands{
     position: absolute;
     left: 45%;
     bottom: 10%;
     visibility: hidden;
+    display: inline;
 }
 
-#DealerHand{
+
+#playerFirstCard{
+    position: relative;
+}
+
+#playerSecondCard{
+    position:relative;
+    right: 60px;
+    bottom: 40px;
+}
+
+#playerSecondHandSecondCard{
+    position:relative;
+    right: 60px;
+    bottom: 40px;
+
+}
+
+
+#dealerHandText{
+    position: relative;
+    color:white;
+    right:10px;
+}
+
+#playerHandText{
+    color:white;
+    position: relative;
+    right:10px;
+}
+
+#chipList{
+    position: absolute;
+    display: inline;
+    visibility: hidden;
+    left: 34%;
+    bottom: 3%;
+    padding: 0px;
+    border: 0px;
+    padding-left: 0;
+}
+
+#startingChipAmount{
+    position: relative;
+    font-size: 30px;
+    color: white;
+    right: 70px;
+    top: 70px;
+    width: 60px;
+
+}
+
+
+
+#betText{
+    position: relative;
+    font-size: 60px;
+    text-align: left;
+    right: 70px;
+    bottom: 80px;
+    display:inline;
     color:white;
 }
 
-#PlayerHand{
-    color:white;
+#roundEnd{
+    position: fixed;
+    left: 40%;
+    top: 35%;
+    color: white;
+    font-size: 30px;
+    visibility: hidden;
+}
+
+#newHandButton{
+    position: relative;
+    left:220px;
 }
 
 li{
     display: inline;
-    display:flexbox;
+    
 }
 
-ul{
+#playerCardList{
     list-style-type: none;
     padding-left:0;
 }
