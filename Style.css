@@ -1,6 +1,7 @@
 a{
-    color: #000000;
-    text-decoration: none;}
+    color: #3576b3;
+    padding: 10px;
+    }
     
 div.HyperLink{
     
@@ -8,14 +9,14 @@ div.HyperLink{
     text-decoration: none;
 }
 
-.PleaseHireUsHeader{
+.Header{
     text-align: center;
     color: #6F5A48;
     font-style: italic;
 }
 
-.cum{
-    height: 300px;
+.photo{
+    height: 400px;
     width: 300px;
     display: block;
     margin-left: auto;

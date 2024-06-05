@@ -1,152 +1,239 @@
 body{
-    background-image: url("PokerTable.jpg");
-    background-repeat:repeat-y;
-    background-size: cover;
-    background-size: 100%;
-}
-
-#startingHeader{
-    position: absolute;
-    left: 42%;
-    font-size: 50px;
-}
-
-#startGameButton{
-    position: absolute;
-    left: 48%;
-    bottom: 50%;
-    border-radius: 50%;
-    border:none;
-    padding: 40px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-}
-
-#blackJackParagraph{
-    position:absolute; 
-    top: 35%;
-    left: 40%;
-    font-size: 70px;
-    color: white;
-    visibility: hidden;
-}
-
-#DealerHand{
-    position: absolute;
-    left: 45%;
-    top: 5%;
-    visibility:hidden;
-}
-
-#dealerFirstCard{
-    position: relative;
-}
-
-#dealerSecondCard{
-    position:relative;
-    right:100px;
-    top:20px;
-}
-
-#PlayerHand{
-    position: relative;
-    top: 70px;
-}
-#allHands{
-    position: absolute;
-    left: 45%;
-    bottom: 10%;
-    visibility: hidden;
-    display: inline;
-}
-
-
-#playerFirstCard{
-    position: relative;
-}
-
-#playerSecondCard{
-    position:relative;
-    right: 60px;
-    bottom: 40px;
-}
-
-#playerSecondHandSecondCard{
-    position:relative;
-    right: 60px;
-    bottom: 40px;
-
-}
-
-
-#dealerHandText{
-    position: relative;
-    color:white;
-    right:10px;
-}
-
-#playerHandText{
-    color:white;
-    position: relative;
-    right:10px;
-}
-
-#chipList{
-    position: absolute;
-    display: inline;
-    visibility: hidden;
-    left: 34%;
-    bottom: 3%;
-    padding: 0px;
-    border: 0px;
-    padding-left: 0;
-}
-
-#startingChipAmount{
-    position: relative;
-    font-size: 30px;
-    color: white;
-    right: 70px;
-    top: 70px;
-    width: 60px;
-
-}
-
-
-
-#betText{
-    position: relative;
-    font-size: 60px;
-    text-align: left;
-    right: 70px;
-    bottom: 80px;
-    display:inline;
-    color:white;
-}
-
-#roundEnd{
-    position: fixed;
-    left: 40%;
-    top: 35%;
-    color: white;
-    font-size: 30px;
-    visibility: hidden;
-}
-
-#newHandButton{
-    position: relative;
-    left:220px;
-}
-
-li{
-    display: inline;
-    
-}
-
-#playerCardList{
-    list-style-type: none;
-    padding-left:0;
-}
+    /* background-image: url("BJTable.png");*/
+     background-repeat:repeat-y;
+     background-size: cover;
+     background-size: 100%;
+     background-color: black;
+ }
+ 
+ h1{
+     animation: flicker 1.5s infinite alternate;
+ }
+ 
+ @keyframes flicker{
+     0%, 18%, 22%, 25%, 53%, 57%, 100%{
+        text-shadow: 
+         0 0 4px #fff,
+         0 0 11px #fff,
+         0 0 19px #fff,
+         0 0 40px #0fa,
+         0 0 80px #0fa,
+         0 0 90px #0fa,
+         0 0 100px #0fa,
+         0 0 150px #0fa;
+     }
+     20%, 24%, 55%{
+         text-shadow:none;
+     }
+ }
+ 
+ #startingHeader{
+     position: absolute;
+     left: 40%;
+     color: #fff;
+     font-size: 70px;
+     text-shadow:
+         0 0 7px #fff,
+         0 0 10px #fff,
+         0 0 21px #fff,
+         0 0 42px #0fa,
+         0 0 82px #0fa,
+         0 0 92px #0fa,
+         0 0 102px #0fa,
+         0 0 151px #0fa;
+ }
+ 
+ #startGameButton{
+     position: absolute;
+     left: 48%;
+     bottom: 50%;
+     border-radius: 20px;
+     border:none;
+ 
+     text-align: center;
+     font-size: 17px;
+     background-color: grey;
+     color: white;
+     height: 40px;
+     width: 100px;
+ }
+ 
+ #blackJackParagraph{
+     position:absolute; 
+     top: 35%;
+     left: 40%;
+     font-size: 70px;
+     color: white;
+     visibility: hidden;
+ }
+ 
+ #DealerHand{
+     position: absolute;
+     left: 45%;
+     top: 5%;
+     visibility:hidden;
+ }
+ 
+ #dealerFirstCard{
+     position: relative;
+ }
+ 
+ #dealerSecondCard{
+     position:relative;
+     right:100px;
+     top:20px;
+ }
+ 
+ #PlayerHand{
+     position: relative;
+     top: 70px;
+ }
+ #allHands{
+     position: absolute;
+     left: 45%;
+     bottom: 10%;
+     visibility: hidden;
+     
+ }
+ 
+ 
+ #playerFirstCard{
+     position: relative;
+     
+ }
+ 
+ #playerSecondCard{
+     position:relative;
+     right: 60px;
+     bottom: 40px;
+ }
+ 
+ #playerSecondHandSecondCard{
+     position:relative;
+     right: 60px;
+     bottom: 40px;
+ 
+ }
+ 
+ 
+ #dealerHandText{
+     position: relative;
+     color:white;
+     right:10px;
+ }
+ 
+ #playerHandText{
+     color:white;
+     position: relative;
+     right:10px;
+ }
+ 
+ #chipList{
+     position: absolute;
+     display: inline;
+     visibility: hidden;
+     left: 34%;
+     bottom: 3%;
+     padding: 0px;
+     border: 0px;
+     padding-left: 0;
+ }
+ 
+ #startingChipAmount{
+     position: relative;
+     font-size: 30px;
+     color: white;
+     right: 70px;
+     top: 70px;
+     width: 60px;
+ 
+ }
+ 
+ 
+ 
+ #betText{
+     position: relative;
+     font-size: 60px;
+     right: 70px;
+     bottom: 0px;
+     display:inline;
+     color: rgb(88, 228, 33);
+     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif 
+ }
+ 
+ #roundEnd{
+     position: fixed;
+     left: 40%;
+     top: 35%;
+     color: white;
+     font-size: 30px;
+     visibility: hidden;
+ }
+ 
+ #newHandButton{
+     position: relative;
+     left:220px;
+ }
+ 
+ li{
+     display: inline;
+     
+ }
+ 
+ #playerCardList{
+     list-style-type: none;
+     padding-left:0;
+ }
+ 
+ #startingChipAmount{
+     color: rgb(88, 228, 33);
+     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif 
+ }
+ 
+ #PlaceBetButton{
+     position: relative;
+     background-color: darkslategray;
+     color: white;
+     border-radius: 20px;
+     bottom: 20px;
+     height: 25px;
+     width: 80px;
+ }
+ 
+ #hitButton{
+     border-radius: 20px;
+     background-color:rgba(108, 236, 22, 0.829);
+     width: 50px;
+     height: 25px;
+     font-size: 16px;
+ }
+ 
+ #stayButton{
+     border-radius: 20px;
+     background-color:rgba(251, 255, 5, 0.829);
+     width: 50px;
+     height: 25px;
+     font-size: 16px;
+ }
+ 
+ #doubleButton{
+     border-radius: 20px;
+     background-color:rgba(238, 10, 10, 0.829);
+     width: 70px;
+     height: 25px;
+     font-size: 16px;
+ }
+ 
+ #splitButton{
+     border-radius: 20px;
+     background-color:rgba(233, 20, 222, 0.829);
+     width: 50px;
+     height: 25px;
+     font-size: 16px;
+ }
+ 
+ #buttons{
+     position: relative;
+     right: 30px;
+ }
+ 

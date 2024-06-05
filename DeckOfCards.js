@@ -6,38 +6,46 @@ function startGame(){
     document.getElementById("startingHeader").remove();
     document.getElementById("chipList").style.visibility = "visible";
     
+    //making the background appear
+    document.body.style.backgroundImage = "url(BJTable.png)";
+
+
     //get value of starting chips
     chipTotal = 100;
-    //chipTotal = document.getElementById("startingChipAmount").innerText;
-    //chipTotal = parseInt(chipTotal.substring(1));
+    
+
     
     chipFormat();
 }
 
 function chipFormat(){
+    //var for how far to move place Bet button
+    var moveButtonLeft = 0;
+    
     //display what chips the player has avalible
     document.getElementById("chipList").style.visibility = "visible";
     document.getElementById("startingChipAmount").innerText = "$" + chipTotal;
    
     //make chips visible if they have become hidden previously.
-    document.getElementById("pinkChip").style.visibility = "visible";
-    document.getElementById("yellowChip").style.visibility = "visible";
-    document.getElementById("purpleChip").style.visibility = "visible";
-    document.getElementById("blackChip").style.visibility = "visible";
-    document.getElementById("greenChip").style.visibility = "visible";
-    document.getElementById("redChip").style.visibility = "visible";
-    document.getElementById("blueChip").style.visibility = "visible";
+    document.getElementById("pinkChip").style.visibility = "unset";
+    document.getElementById("yellowChip").style.visibility = "unset";
+    document.getElementById("purpleChip").style.visibility = "unset";
+    document.getElementById("blackChip").style.visibility = "unset";
+    document.getElementById("greenChip").style.visibility = "unset";
+    document.getElementById("redChip").style.visibility = "unset";
+    document.getElementById("blueChip").style.visibility = "unset";
     
     
     
-    if(chipTotal < 5000){document.getElementById("pinkChip").style.visibility = "hidden";}
-         if (chipTotal < 1000){document.getElementById("yellowChip").style.visibility = "hidden";}
-             if (chipTotal < 500){document.getElementById("purpleChip").style.visibility = "hidden";}
-                 if (chipTotal < 100){document.getElementById("blackChip").style.visibility = "hidden";}
-                     if (chipTotal < 25){document.getElementById("greenChip").style.visibility = "hidden";}
-                         if (chipTotal < 5){document.getElementById("redChip").style.visibility = "hidden";}
-                            if (chipTotal < 1){document.getElementById("blueChip").style.visibility = "hidden";}
-    
+    if(chipTotal < 5000){document.getElementById("pinkChip").style.visibility = "hidden"; moveButtonLeft = 1;}
+         if (chipTotal < 1000){document.getElementById("yellowChip").style.visibility = "hidden";  moveButtonLeft = 2;}
+             if (chipTotal < 500){document.getElementById("purpleChip").style.visibility = "hidden";  moveButtonLeft = 3;}
+                 if (chipTotal < 100){document.getElementById("blackChip").style.visibility = "hidden";  moveButtonLeft = 4;}
+                     if (chipTotal < 25){document.getElementById("greenChip").style.visibility = "hidden";  moveButtonLeft = 5;}
+                         if (chipTotal < 5){document.getElementById("redChip").style.visibility = "hidden";  moveButtonLeft = 6;}
+                            if (chipTotal < 1){document.getElementById("blueChip").style.visibility = "hidden";  moveButtonLeft = 7;}
+    //move button left depending on how many chips are showing
+    document.getElementById("PlaceBetButton").style.right = (moveButtonLeft * 87) +"px";
      
 
     placeBets(chipTotal);
@@ -105,6 +113,7 @@ function chipFunction(event){
 //starting values
 var playerTotal = 0;
 var dealerTotal = 0;
+var playerSecondHandTotal;
 var pxToMoveImgRight;
 var pxToMoveImgBottom;
 var splitCount = 0;
@@ -117,6 +126,7 @@ var playerSecondCard = null;
 var dealerSecondCard = null;
 var totalBet = 0;
 var chipTotal;
+var getValueOfBothHands = false;
 
 
 
@@ -124,7 +134,9 @@ var chipTotal;
 
 //return link for a specific card
 function getCardImageLink(suite, value){
-
+    //fix for if card is a 10
+    if(value === "10"){value = "T";}
+    
     return ("PlayingCards/" + value + suite + ".png");
     }
 
@@ -145,17 +157,18 @@ function shuffleDeck(deck){
 }
 
 //Return point value of cards
-function valueParser(cardValue, isPlayer){
+function valueParser(cardValue, isPlayer, accountForAces){
 
     //get value of card
     switch(cardValue){
         case "A":
-        if(isPlayer){amountOfAces++;}
-        else{dealersAces++}
+        if(accountForAces){ if(isPlayer){amountOfAces++;}
+        else{dealersAces++}}
         return 11;
         case "K":
         case "Q":
         case "J":
+        case "T":
             return 10;
         default: 
             return parseInt(cardValue);
@@ -167,7 +180,7 @@ function valueParser(cardValue, isPlayer){
 function playerHitCard(event){
 
     const button = event.target;
-   
+
     //hide split button.
     button.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.style.visibility = "hidden";
     
@@ -192,9 +205,9 @@ function playerHitCard(event){
     img.style.right = (pxToMoveImgRight += 60) + "px";
     img.style.bottom = (pxToMoveImgBottom += 40) + "px";
    
-    
+    console.log(playerTotal);
 
-    playerTotal += valueParser(newCard.value, true);
+    playerTotal += valueParser(newCard.value, true, true);
     
     //TODO-- case where player busts
     if(playerTotal > 21){
@@ -206,7 +219,9 @@ function playerHitCard(event){
         }
         
     else{
-       document.getElementById("buttons").style.visibility = "hidden";
+       //make buttons hidden
+       button.parentElement.style.visibility = "hidden";
+       
        gameEnd();
        //TODO-end Game
     }
@@ -214,9 +229,9 @@ function playerHitCard(event){
 
 }
 
-function playerSplitCard(){
+function playerSplitCard(){ 
 
-    if(playerFirstCard.value == playerSecondCard.value && splitCount == 0){
+    if(playerFirstCard.value === playerSecondCard.value && splitCount === 0){
         
         //style
         const playersHands = document.getElementById("allHands");
@@ -227,14 +242,15 @@ function playerSplitCard(){
 
         const playerSecondHand = playerFirstHand.cloneNode(true);
         playersHands.appendChild(playerSecondHand);
+        
 
         //style Hands correctly on page.
-        playerFirstHand.style.top = "235px";
-        //playerFirstHand.style.right = "100%";
-        playerFirstHand.style.right = "150px";
+        playerFirstHand.style.top = "385px";
+        playerSecondHand.style.top = "70px";
+        playerFirstHand.style.right = "200px";
         playerSecondHand.style.position = "relative";
-        playerSecondHand.style.left = "150px"; 
-
+        playerSecondHand.style.left = "200px"; 
+        
         //naming the cards correctly.
         playerSecondHand.id = "playerSecondHand";
         playerSecondHand.childNodes[1].style.visibility = "hidden";
@@ -243,6 +259,20 @@ function playerSplitCard(){
         playerSecondHand.childNodes[5].style.visibility = "hidden";
         playerSecondHand.childNodes[5].childNodes[1].addEventListener("click",playerHitCard);
        
+        //giving cards correct values
+        var handOneNewCard = deckShuffled.pop();
+        var handTwoNewCard = deckShuffled.pop();
+        document.getElementById("playerSecondCard").src = getCardImageLink(handOneNewCard.suite, handOneNewCard.value);
+        document.getElementById("playerSecondHandFirstCard").src = document.getElementById("playerSecondHandSecondCard").src;
+        document.getElementById("playerSecondHandSecondCard").src = getCardImageLink(handTwoNewCard.suite, handTwoNewCard.value);
+
+        //setting scores to correct values
+        playerTotal = (playerTotal/2) + valueParser(handOneNewCard.value, true, true);
+
+        console.log(amountOfAces);
+        if(playerSecondCard.value === "A"){amountOfAces--;}
+        console.log(amountOfAces);
+        secondHand = true;
     }
 }
 
@@ -280,11 +310,16 @@ function playerDoubleDown(event){
 
     //getting value of new card and adding it to player Total. 
     //If total is over 21 and player has an A subtract 10.
-    playerTotal += valueParser(newCard.value, true);
+    playerTotal += valueParser(newCard.value, true, true);
     
+    console.log(playerTotal);
+    console.log(amountOfAces);
+
     //TODO-- case where player busts
     if(playerTotal > 21){
         
+
+
         //if the player has an ace
         if(amountOfAces > 0){
             amountOfAces--;
@@ -305,34 +340,82 @@ function playerStay(){
     DealersTurn();
 }
 
+function playerBlackJack(){
+    document.getElementById("blackJackParagraph").style.visibility = "hidden";
+    totalBet *= 2.5;
+    chipTotal += totalBet;
+    document.getElementById("DealerHand").style.visibility = "hidden";
+    document.getElementById("allHands").style.visibility = "hidden";
+    chipFormat();
+}
+
+//function for audio of card being placed for dealer
+function cardAudio(){
+    new Audio("cardFlip.mp3").play();
+}
+
 //Dealer Draw
 function DealersTurn(){
-   
-     //Show Dealers first Card
-     document.getElementById("dealerFirstCard").src = getCardImageLink(dealerFirstCard.suite, dealerFirstCard.value);
-     document.getElementById("dealerSecondCard").style.top = "0px";
-     document.getElementById("dealerFirstCard").style.left = "100px";
-     
 
-    while(dealerTotal < 17){
+//if player Has another Hand
+if(!secondHand){
+    //time between dealer dealing each card
+    var delay = 1000;
 
-        const newCard = deckShuffled.pop();
-
-       
+        //Show Dealers first Card
+        document.getElementById("dealerFirstCard").src = getCardImageLink(dealerFirstCard.suite, dealerFirstCard.value);
+        document.getElementById("dealerSecondCard").style.top = "0px";
+        document.getElementById("dealerFirstCard").style.left = "100px";
         
-        //audio for new card
-        new Audio("cardFlip.mp3").play();
-        setTimeout(dealerDraw, 400,newCard);
-        dealerTotal += valueParser(newCard.value, false);
 
-        //case where dealer is over 21 but has an A
-        if(dealerTotal > 21 && dealersAces > 0){dealerTotal - 10;}
-    }
+        while(dealerTotal < 17){
 
-    //gameEnds
-    setTimeout(gameEnd, 2700);
+            const newCard = deckShuffled.pop();
+
+        
+            
+            //audio for new card
+            setTimeout(cardAudio, delay - 400);
+            setTimeout(dealerDraw, delay,newCard);
+            delay += 1500;
+            dealerTotal += valueParser(newCard.value, false, true);
+
+
+            //case where dealer is over 21 but has an A
+            if(dealerTotal > 21 && dealersAces > 0){dealerTotal -= 10; dealersAces--;}
+        }
     
+    //gameEnds
+    setTimeout(gameEnd, delay + 1000);
 }
+//when player splits hand
+else{
+    //storve value of hand
+    playerSecondHandTotal = playerTotal;
+    //set second hand to false
+    secondHand = false;
+    //make buttons of second hand visible.
+    document.getElementById("playerSecondHand").childNodes[5].style.visibility = "visible";
+    
+    //setting values to move card to original
+    pxToMoveImgBottom = 40;
+    pxToMoveImgRight = 60;
+    
+    //length of link string
+    var linkLength = document.getElementById("playerSecondHandFirstCard").src.length;
+    
+    amountOfAces = 0;
+
+    //get value of 2nd hand and set it.
+    playerTotal = valueParser(document.getElementById("playerSecondHandFirstCard").src.substring(linkLength-6,linkLength-5), true, true) + valueParser(document.getElementById("playerSecondHandSecondCard").src.substring(linkLength-6,linkLength-5), true, true);
+    console.log(playerTotal);
+    console.log(amountOfAces);
+    getValueOfBothHands = true;
+
+}
+
+}
+
 
 function dealerDraw(newCard){
     //create img element and add it to end of that hands card list.
@@ -349,29 +432,58 @@ function dealerDraw(newCard){
 //see who wins and award correct chips to player if won
 function gameEnd(){
     
+    var sign = "";
     
-    //rewarding chips based on win, loss, or tie.
-    if((playerTotal > dealerTotal && playerTotal < 22) || (dealerTotal > 21 && playerTotal < 22)){
-        document.getElementById("endGameText").innerHTML = "FUCK YEA YOU WON THAT SHIT";
-        totalBet *= 2;
-    }
-    else{
-        document.getElementById("endGameText").innerHTML = "FUCK YOU SUCK, YOU JUST LOST TO A BOT\!";
-        totalBet = 0;
-    }
+    if(getValueOfBothHands){
 
-    if(playerTotal == dealerTotal){
-        document.getElementById("endGameText").innerHtml = "DRAW";
+        //rewarding chips based on win, loss, or tie.
+        if((playerTotal > dealerTotal && playerTotal < 22) || (dealerTotal > 21 && playerTotal < 22)){
+            totalBet *= 2;
+            sign = "+";
+        }
+
+        else if(playerTotal === dealerTotal){
+            console.log("tie");
+        }
+
+        else{
+                totalBet = 0;
+                document.getElementById("betText").style.color = "red";
         
+        }
+
+        document.getElementById("betText").innerText = sign + " $" + totalBet;
+
+        chipTotal += totalBet;
+    }
+    //document.getElementById("roundEnd").style.visibility = "visible";
+
+
+    //will have player play second hand if they split and bust
+    if(secondHand){
+       //set second hand to false
+       secondHand = false;
+       //make buttons of second hand visible.
+       document.getElementById("playerSecondHand").childNodes[5].style.visibility = "visible";
+       
+       //setting values to move card to original
+       pxToMoveImgBottom = 40;
+       pxToMoveImgRight = 60;
+       
+       //length of link string
+       var linkLength = document.getElementById("playerSecondHandFirstCard").src.length;
+       
+       amountOfAces = 0;
+
+       //get value of 2nd hand and set it.
+       playerTotal = valueParser(document.getElementById("playerSecondHandFirstCard").src.substring(linkLength-6,linkLength-5), true, true) + valueParser(document.getElementById("playerSecondHandSecondCard").src.substring(linkLength-6,linkLength-5), true, true);
+       console.log(playerTotal);
+       console.log(amountOfAces);
+
+       
     }
 
-    document.getElementById("betText").innerText = totalBet;
-
-    chipTotal += totalBet;
-
-    document.getElementById("roundEnd").style.visibility = "visible";
-
-    document.getElementById("newHandButton").addEventListener("click",gameTransition);
+    else{document.getElementById("newHandButton").addEventListener("click",gameTransition);}
 
     
 
@@ -382,6 +494,7 @@ function gameTransition(){
     document.getElementById("DealerHand").style.visibility = "hidden";
     document.getElementById("allHands").style.visibility = "hidden";
     document.getElementById("roundEnd").style.visibility = "hidden";
+    document.getElementById("betText").style.color = "rgb(88, 228, 33)";
     //document.getElementById("dealerCardList").remove();
     
     
@@ -405,9 +518,10 @@ function gameTransition(){
          lastCard.nextSibling.remove();
     }
 
-     //making sure bet is 0.
+     //making sure bet is 0. making sure amount of aces for both are 0.
      totalBet = 0;
-
+     dealersAces = 0;
+     amountOfAces = 0;
    
 
      document.getElementById("dealerFirstCard").src = "PlayingCards/cardBackGreen.png";
@@ -452,8 +566,12 @@ document.getElementById("buttons").style.visibility = "visible";
 document.getElementById("splitButton").style.visibility = "visible";
 
 //showing what the player Bet
-document.getElementById("betText").innerText = totalBet;
-console.log(totalBet);
+document.getElementById("betText").innerText = "$" + totalBet;
+
+//format players bet;
+var betTextLength = totalBet.toString.length;
+console.log(betTextLength);
+document.getElementById("betText").style.left = ( 10 + (betTextLength * 15)) + "px";
 
 //ToDo --Make more effecient
 pxToMoveImgRight = 60;
@@ -465,18 +583,25 @@ pxToMoveImgRight = 60;
  playerSecondCard = deckShuffled.pop();
  dealerSecondCard = deckShuffled.pop();
 
+//test
+playerFirstCard.value = "A";
+playerSecondCard.value = "A";
+
  //get total for player
- playerTotal = valueParser(playerFirstCard.value, true) + valueParser(playerSecondCard.value, true)
- dealerTotal = valueParser(dealerFirstCard.value, false) + valueParser(dealerSecondCard.value, false)
+ playerTotal = valueParser(playerFirstCard.value, true, true) + valueParser(playerSecondCard.value, true, true)
+ dealerTotal = valueParser(dealerFirstCard.value, false, true) + valueParser(dealerSecondCard.value, false, true)
 
  //show hands
  document.getElementById("DealerHand").style.visibility = "visible";
  document.getElementById("allHands").style.visibility = "visible";
 
 
+
+
 //BlackJack For Player
-if(valueParser(playerFirstCard.value, true)  + valueParser(playerSecondCard.value, true) == 21){
-   document.getElementById("blackJackParagraph").style.visibility = "visible";
+if(valueParser(playerFirstCard.value, true, false)  + valueParser(playerSecondCard.value, true, false) === 21){
+    setTimeout(playerBlackJack, 3000);
+    document.getElementById("blackJackParagraph").style.visibility = "visible";
     
 }
 
