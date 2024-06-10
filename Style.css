@@ -7,7 +7,16 @@ div.HyperLink{
     
     text-align: center;
     text-decoration: none;
+    font-size: 18px;
+    text-emphasis-color:  black;
 }
+.homePageLinks{
+    color:black;
+}
+.homePageLinks:hover{
+    color:red;
+}
+
 
 .Header{
     text-align: center;

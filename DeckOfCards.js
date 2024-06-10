@@ -113,7 +113,7 @@ function chipFunction(event){
 //starting values
 var playerTotal = 0;
 var dealerTotal = 0;
-var playerSecondHandTotal;
+var playerFirstHandTotal;
 var pxToMoveImgRight;
 var pxToMoveImgBottom;
 var splitCount = 0;
@@ -127,6 +127,7 @@ var dealerSecondCard = null;
 var totalBet = 0;
 var chipTotal;
 var getValueOfBothHands = false;
+var firstHandBust = false;
 
 
 
@@ -205,7 +206,6 @@ function playerHitCard(event){
     img.style.right = (pxToMoveImgRight += 60) + "px";
     img.style.bottom = (pxToMoveImgBottom += 40) + "px";
    
-    console.log(playerTotal);
 
     playerTotal += valueParser(newCard.value, true, true);
     
@@ -222,7 +222,14 @@ function playerHitCard(event){
        //make buttons hidden
        button.parentElement.style.visibility = "hidden";
        
+       //if first hand did not bust and second hand did
+       if(firstHandBust){DealersTurn();}
+       if(secondHand){firstHandBust = true;}
+
+       
+
        gameEnd();
+       
        //TODO-end Game
     }
     }
@@ -257,8 +264,10 @@ function playerSplitCard(){
         playerSecondHand.childNodes[3].childNodes[1].childNodes[0].id = "playerSecondHandFirstCard";
         playerSecondHand.childNodes[3].childNodes[3].childNodes[0].id = "playerSecondHandSecondCard";
         playerSecondHand.childNodes[5].style.visibility = "hidden";
+        //add event listners for next hand buttons.
         playerSecondHand.childNodes[5].childNodes[1].addEventListener("click",playerHitCard);
-       
+        playerSecondHand.childNodes[5].childNodes[3].addEventListener("click",playerStay);
+        playerSecondHand.childNodes[5].childNodes[5].addEventListener("click",playerDoubleDown);
         //giving cards correct values
         var handOneNewCard = deckShuffled.pop();
         var handTwoNewCard = deckShuffled.pop();
@@ -269,10 +278,11 @@ function playerSplitCard(){
         //setting scores to correct values
         playerTotal = (playerTotal/2) + valueParser(handOneNewCard.value, true, true);
 
-        console.log(amountOfAces);
         if(playerSecondCard.value === "A"){amountOfAces--;}
-        console.log(amountOfAces);
+      
         secondHand = true;
+
+        chipTotal -=totalBet;
     }
 }
 
@@ -283,7 +293,7 @@ function playerDoubleDown(event){
     //logic for bet amount and update the bet Text
     chipTotal -= totalBet;
     totalBet *= 2;
-    document.getElementById("betText").innerText = totalBet;
+    document.getElementById("betText").innerText = "$" + totalBet;
    
     //hide split button.
     button.parentNode.style.visibility = "hidden";
@@ -311,9 +321,6 @@ function playerDoubleDown(event){
     //getting value of new card and adding it to player Total. 
     //If total is over 21 and player has an A subtract 10.
     playerTotal += valueParser(newCard.value, true, true);
-    
-    console.log(playerTotal);
-    console.log(amountOfAces);
 
     //TODO-- case where player busts
     if(playerTotal > 21){
@@ -332,22 +339,17 @@ function playerDoubleDown(event){
 
 
 //Let Dealer Draw
-function playerStay(){
-    document.getElementById("buttons").style.visibility = "hidden";
+function playerStay(event){
+    //document.getElementById("buttons").style.visibility = "hidden";
     //TODO-Fix
-    document.getElementById("splitButton").style.visibility = "hidden";
+    //document.getElementById("splitButton").style.visibility = "hidden";
+    event.target.parentElement.style.visibility = "hidden";
+    event.target.nextSibling.nextSibling.nextSibling.nextSibling.style.visibility = "hidden";
 
+   
     DealersTurn();
 }
 
-function playerBlackJack(){
-    document.getElementById("blackJackParagraph").style.visibility = "hidden";
-    totalBet *= 2.5;
-    chipTotal += totalBet;
-    document.getElementById("DealerHand").style.visibility = "hidden";
-    document.getElementById("allHands").style.visibility = "hidden";
-    chipFormat();
-}
 
 //function for audio of card being placed for dealer
 function cardAudio(){
@@ -391,7 +393,7 @@ if(!secondHand){
 //when player splits hand
 else{
     //storve value of hand
-    playerSecondHandTotal = playerTotal;
+    playerFirstHandTotal = playerTotal;
     //set second hand to false
     secondHand = false;
     //make buttons of second hand visible.
@@ -408,8 +410,7 @@ else{
 
     //get value of 2nd hand and set it.
     playerTotal = valueParser(document.getElementById("playerSecondHandFirstCard").src.substring(linkLength-6,linkLength-5), true, true) + valueParser(document.getElementById("playerSecondHandSecondCard").src.substring(linkLength-6,linkLength-5), true, true);
-    console.log(playerTotal);
-    console.log(amountOfAces);
+    
     getValueOfBothHands = true;
 
 }
@@ -434,16 +435,49 @@ function gameEnd(){
     
     var sign = "";
     
+    //when hit busts and you have multiple hands
+    if(secondHand){
+        //set second hand to false
+        secondHand = false;
+        //make buttons of second hand visible.
+        document.getElementById("playerSecondHand").childNodes[5].style.visibility = "visible";
+        
+        //setting values to move card to original
+        pxToMoveImgBottom = 40;
+        pxToMoveImgRight = 60;
+        
+        //length of link string
+        var linkLength = document.getElementById("playerSecondHandFirstCard").src.length;
+        
+        amountOfAces = 0;
+        playerFirstHandTotal = playerTotal;
+        //get value of 2nd hand and set it.
+        playerTotal = valueParser(document.getElementById("playerSecondHandFirstCard").src.substring(linkLength-6,linkLength-5), true, true) + valueParser(document.getElementById("playerSecondHandSecondCard").src.substring(linkLength-6,linkLength-5), true, true);
+        console.log(playerTotal);
+        console.log(playerFirstHandTotal);
+        getValueOfBothHands = true;
+ 
+        return;
+     }
+ 
+    
     if(getValueOfBothHands){
-
+        //first hand
         //rewarding chips based on win, loss, or tie.
-        if((playerTotal > dealerTotal && playerTotal < 22) || (dealerTotal > 21 && playerTotal < 22)){
+        //value to keep track of original total bet
+        var originalTotalBet = totalBet;
+        if((playerFirstHandTotal > dealerTotal && playerFirstHandTotal < 22) || (dealerTotal > 21 && playerFirstHandTotal < 22)){
+            if(document.getElementById("playerCardList").childElementCount === 2 && playerFirstHandTotal === 21){
+                totalBet *=2.5;
+            }
+            else{
             totalBet *= 2;
+            }
             sign = "+";
         }
 
-        else if(playerTotal === dealerTotal){
-            console.log("tie");
+        else if(playerFirstHandTotal === dealerTotal && !(dealerTotal > 21)){
+           
         }
 
         else{
@@ -455,35 +489,73 @@ function gameEnd(){
         document.getElementById("betText").innerText = sign + " $" + totalBet;
 
         chipTotal += totalBet;
-    }
-    //document.getElementById("roundEnd").style.visibility = "visible";
+    
+        //reseting total Bet
+        totalBet = originalTotalBet;
 
+        //second hand
+            if((playerTotal > dealerTotal && playerTotal < 22) || (dealerTotal > 21 && playerTotal < 22)){
+                if(document.getElementById("playerSecondHand").childNodes[3].childElementCount === 2 && playerTotal === 21){
+                    totalBet *= 2.5;
+                }
+                else{
+                totalBet *= 2;
+                }
+                sign = "+";
+            }
+
+            else if(playerTotal === dealerTotal){
+                
+            }
+
+            else{
+                    totalBet = 0;
+                    document.getElementById("playerSecondHand").childNodes[7].style.color = "red";
+            
+            }
+
+           document.getElementById("playerSecondHand").childNodes[7].innerText = sign + " $" + totalBet;
+
+            chipTotal += totalBet;
+        
+
+    document.getElementById("roundEnd").style.visibility = "visible";
+        }
+
+        //if we only get value of first hand
+        else{
+            if((playerTotal > dealerTotal && playerTotal < 22) || (dealerTotal > 21 && playerTotal < 22)){
+                //checking for blackjack
+                if(document.getElementById("playerCardList").childElementCount === 2 && playerTotal === 21){
+                    totalBet *=2.5;
+                }
+                else{
+                totalBet *= 2;
+                }
+                sign = "+";
+            }
+
+            else if(playerTotal === dealerTotal){
+                
+            }
+
+            else{
+                    totalBet = 0;
+                    document.getElementById("betText").style.color = "red";
+            
+            }
+
+            document.getElementById("betText").innerText = sign + " $" + totalBet;
+
+            chipTotal += totalBet;
+        
+
+    document.getElementById("roundEnd").style.visibility = "visible";
+        }
 
     //will have player play second hand if they split and bust
-    if(secondHand){
-       //set second hand to false
-       secondHand = false;
-       //make buttons of second hand visible.
-       document.getElementById("playerSecondHand").childNodes[5].style.visibility = "visible";
-       
-       //setting values to move card to original
-       pxToMoveImgBottom = 40;
-       pxToMoveImgRight = 60;
-       
-       //length of link string
-       var linkLength = document.getElementById("playerSecondHandFirstCard").src.length;
-       
-       amountOfAces = 0;
-
-       //get value of 2nd hand and set it.
-       playerTotal = valueParser(document.getElementById("playerSecondHandFirstCard").src.substring(linkLength-6,linkLength-5), true, true) + valueParser(document.getElementById("playerSecondHandSecondCard").src.substring(linkLength-6,linkLength-5), true, true);
-       console.log(playerTotal);
-       console.log(amountOfAces);
-
-       
-    }
-
-    else{document.getElementById("newHandButton").addEventListener("click",gameTransition);}
+    
+    document.getElementById("newHandButton").addEventListener("click",gameTransition);
 
     
 
@@ -516,6 +588,17 @@ function gameTransition(){
     while(document.getElementById("playerSecondCard").parentElement != lastCard){
          lastCard = lastCard.previousSibling;
          lastCard.nextSibling.remove();
+    }
+
+    //getting rid of second hand and setting getValue of second hand to false.
+    if(getValueOfBothHands){
+        document.getElementById("playerSecondHand").remove();
+        getValueOfBothHands = false;
+        document.getElementById("allHands").style.left  = "45%";
+        document.getElementById("allHands").style.bottom = "10%";
+        document.getElementById("PlayerHand").style.top = "70px";
+        document.getElementById("PlayerHand").style.right = "0px";
+        firstHandBust = false;
     }
 
      //making sure bet is 0. making sure amount of aces for both are 0.
@@ -570,7 +653,7 @@ document.getElementById("betText").innerText = "$" + totalBet;
 
 //format players bet;
 var betTextLength = totalBet.toString.length;
-console.log(betTextLength);
+
 document.getElementById("betText").style.left = ( 10 + (betTextLength * 15)) + "px";
 
 //ToDo --Make more effecient
@@ -583,9 +666,6 @@ pxToMoveImgRight = 60;
  playerSecondCard = deckShuffled.pop();
  dealerSecondCard = deckShuffled.pop();
 
-//test
-playerFirstCard.value = "A";
-playerSecondCard.value = "A";
 
  //get total for player
  playerTotal = valueParser(playerFirstCard.value, true, true) + valueParser(playerSecondCard.value, true, true)
@@ -600,8 +680,9 @@ playerSecondCard.value = "A";
 
 //BlackJack For Player
 if(valueParser(playerFirstCard.value, true, false)  + valueParser(playerSecondCard.value, true, false) === 21){
-    setTimeout(playerBlackJack, 3000);
-    document.getElementById("blackJackParagraph").style.visibility = "visible";
+    document.getElementById("buttons").style.visibility = "hidden";
+    document.getElementById("splitButton").style.visibility = "hidden";
+    setTimeout(DealersTurn,1000);
     
 }
 
